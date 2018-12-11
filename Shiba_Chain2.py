@@ -7,7 +7,7 @@ Created on Mon Oct  1 12:37:27 2018
 """
 #everything in atomic units
 
-def Shiba_Chain2(nstep, N_atoms, borde, ancho, spin1, spin2, alpha, N_omega, U, k_F):
+def Shiba_Chain2(nstep, N_atoms, N_omega, spin1, spin2, alpha, borde, ancho, k_F, U, j, DOS, s, delta):
 
     import numpy as np
     pi=np.pi
@@ -65,6 +65,7 @@ def Shiba_Chain2(nstep, N_atoms, borde, ancho, spin1, spin2, alpha, N_omega, U, 
     #impurity Hamiltonian
     import Self_Energy2D as SE2
     Self = SE2.Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde, lamda)
+    
     
     GG = np.zeros([4 * N_y * N_x , 4 * N_y * N_x, N_omega], dtype=complex)
     

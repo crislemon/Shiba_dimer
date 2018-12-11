@@ -6,20 +6,10 @@ Created on Mon Dec  3 16:23:26 2018
 @author: cristina
 """
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Oct  2 17:12:41 2018
-
-@author: cristina
-"""
-
-#dimer
-
 import numpy as np
 import matplotlib.pyplot as plt
 import Shiba_Chain2 as sc
-import detect_peaks as dp
+#import detect_peaks as dp
 
 #distance vector
 d_ini = 0.4
@@ -28,11 +18,15 @@ N = np.linspace(d_final, d_ini, 21)
 pi=np.pi
 borde = 1
 ancho = 3
-alpha = 0.0
+alpha = 3.5
 N_omega = 2001
 U = 5500./27211.6
 #U = 0
-k_F = 0.183
+k_f = 0.5
+DOS = 1.0
+s = 5.0/2.0 #spin
+delta = 0.75/27211.6 #SC gap
+j = 1800./27211.6 #coupling
 
 row = int(ancho/2)
 
@@ -51,7 +45,7 @@ spin2= pi
 
 for n_i in range(len(N)):
     
-    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, borde, ancho, spin1, spin2, alpha, N_omega, U, k_F)
+    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
     spectro_AF[n_i, :] = spectro[1,row,:]
     
 #################
@@ -63,7 +57,7 @@ spin2 = 0
 
 for n_i in range(len(N)):
     
-    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, borde, ancho, spin1, spin2, alpha, N_omega, U, k_F)
+    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
     spectro_FM[n_i, : ] = spectro[1,row,:]
     
 
@@ -77,16 +71,11 @@ spin2=pi
 
 for n_i in range(len(N)):
     
-    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, borde, ancho, spin1, spin2, alpha, N_omega, U, k_F)
+    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
     spectro_FM2[n_i, :] = spectro[1,row,:]
     
     
-#    if Vpeak_FM2_minus[n_i] == Vpeak_FM_minus[n_i] and len(Shiba_minus)==2:
-#        Vpeak_FM2_minus[n_i] = Shiba_minus[idxminus-1]
-    
-    
-    
-    
+   
 plt.figure(1)
 plt.imshow(spectro_AF, aspect='auto', cmap = plt.cm.gnuplot)
 
