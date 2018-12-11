@@ -11,11 +11,25 @@ import matplotlib.pyplot as plt
 import Shiba_Chain2 as sc
 import detect_peaks as dp
 
+
+alpha_ini = 0.0
+alpha_final = 5.0
+alpha = np.linspace(alpha_ini, alpha_final, 10)
 pi=np.pi
+borde = 1
+ancho = 3
+d = 1.0
+N_omega = 2001
+U = 5500./27211.6
+U = 0
+k_f = 0.5
+DOS = 1.0
+s = 5.0/2.0 #spin
+delta = 0.75/27211.6 #SC gap
+j = 1800./27211.6 #coupling
 
-n=1.0
+row = int(ancho/2)
 
-alpha=np.linspace(0,2,15)
 
 Vpeak_AF_plus =np.zeros(len(alpha))
 Vpeak_AF_minus =np.zeros(len(alpha))
@@ -25,11 +39,12 @@ Vpeak_AF_minus =np.zeros(len(alpha))
 for n_i in range(len(alpha)):
     
     #AF case
-    (gg , N_matrix , N_omega , vv, spectro)=sc.Shiba_Chain2(n, 3, 'AF', alpha[n_i])
+    spin1=0
+    spin2= pi
+    (vv, spectro) = sc.Shiba_Chain2(d, 2, N_omega, spin1, spin2, alpha[n_i], borde, ancho, k_f, U, j, DOS, s, delta)
     
     plt.figure(1)
     plt.style.use('seaborn-bright')
-    row = int(N_matrix/2)
     plt.plot(vv, spectro[1,row,:],linewidth=0.8, label = '%i' % n_i)
     ndexes = dp.detect_peaks(spectro[2,row,:])
     peaks = vv[ndexes]
@@ -67,11 +82,13 @@ Vpeak_FM2_minus =np.zeros(len(alpha))
 for n_i in range(len(alpha)):
     
     #FM case
-    (gg , N_matrix , N_omega , vv, spectro)=sc.Shiba_Chain2(n, 3, 'FM', alpha[n_i])
+    spin1=0
+    spin2=0
+
+    (vv, spectro) = sc.Shiba_Chain2(d, 2, N_omega, spin1, spin2, alpha[n_i], borde, ancho, k_f, U, j, DOS, s, delta)
     
     plt.figure(2)
     plt.style.use('seaborn-bright')
-    row = int(N_matrix/2)
     plt.plot(vv, spectro[1,row,:],linewidth=0.8, label = '%i' % n_i)
     ndexes = dp.detect_peaks(spectro[1,row,:])
     peaks = vv[ndexes]
@@ -98,7 +115,7 @@ for n_i in range(len(alpha)):
     Vpeak_FM2_minus[n_i]=Shiba_minus[-1]
   
 
-Delta= 1.0#meV
+#Delta= 1.0#meV
     
 plt.figure(3)
 plt.style.use('seaborn-pastel')
@@ -114,7 +131,7 @@ plt.title('SOC')
 
 
 plt.figure(4)
-plt.plot(alpha,Vpeak_FM1_minus/Delta,'r.-')
+plt.plot(alpha,Vpeak_FM1_minus/delta,'r.-')
 plt.xlabel('alpha')
 plt.ylabel('E/Delta')
 plt.ylim(0, 0.3)

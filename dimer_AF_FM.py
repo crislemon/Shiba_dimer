@@ -6,8 +6,6 @@ Created on Tue Oct  2 17:12:41 2018
 @author: cristina
 """
 
-#dimer
-
 import numpy as np
 import matplotlib.pyplot as plt
 import Shiba_Chain2 as sc
