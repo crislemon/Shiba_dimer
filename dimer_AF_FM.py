@@ -13,21 +13,26 @@ import matplotlib.pyplot as plt
 import Shiba_Chain2 as sc
 import detect_peaks as dp
 
-N = np.linspace(2.5, 0.5, 40)
+
+d_ini = 0.5
+d_final = 2.5
+N = np.linspace(d_final, d_ini, 31)
 pi=np.pi
 borde = 1
 ancho = 3
-alpha = 0
+alpha = 0.0
+N_omega = 2001
+U = 5500./27211.6
+U = 0
+k_f = 0.5
+DOS = 1.0
+s = 5.0/2.0 #spin
+delta = 0.75/27211.6 #SC gap
+j = 1800./27211.6 #coupling
 
 row = int(ancho/2)
 
-#def indices(a, func):
-#    return [i for (i, val) in enumerate(a) if func(val)]
 
-
-#nstep, N_matrix, spin1, spin2, alpha
-
-#######################
 """"""""""""""""""""""""
 "Anti-ferromagnetic spin1 = 0 spin2 = pi"
 """"""""""""""""""""""""
@@ -38,7 +43,7 @@ spin2= pi
 Vpeak_AF_plus =np.zeros(len(N))
 Vpeak_AF_minus =np.zeros(len(N))
 
-(vv, spectro) = sc.Shiba_Chain2(N[0], 2, borde, ancho, spin1, spin2, alpha)
+(vv, spectro) = sc.Shiba_Chain2(N[0], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
     
 spectro = spectro[1,row,:]
 indexes = dp.detect_peaks(spectro)
@@ -65,7 +70,7 @@ Vpeak_AF_minus[0]= Shiba_minus[-1]
 
 for n_i in range(1, len(N)):
     
-    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, borde, ancho, spin1, spin2, alpha)
+    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
     
     spectro = spectro[1,row,:]
     indexes = dp.detect_peaks(spectro)
@@ -113,7 +118,7 @@ Vpeak_FM_minus =np.zeros(len(N))
 spin1=0
 spin2=0
 
-(vv, spectro) = sc.Shiba_Chain2(N[0], 2, borde, ancho, spin1, spin2, alpha)
+(vv, spectro) = sc.Shiba_Chain2(N[0], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
 spectro = spectro[1,row,:]
 indexes = dp.detect_peaks(spectro)
 Shiba=vv[indexes]
@@ -136,7 +141,7 @@ Vpeak_FM_minus[0]= Shiba_minus[-1]
 
 for n_i in range(1,len(N)):
     
-    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, borde, ancho, spin1, spin2, alpha)
+    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
     spectro = spectro[1,row,:]
     #plt.plot(vv, spectro, label='AF')
     indexes = dp.detect_peaks(spectro)
@@ -179,7 +184,7 @@ Vpeak_FM2_minus =np.zeros(len(N))
 spin1=pi
 spin2=pi
 
-(vv, spectro) = sc.Shiba_Chain2(N[0], 2, borde, ancho, spin1, spin2, alpha)
+(vv, spectro) = sc.Shiba_Chain2(N[0], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
 spectro = spectro[1,row,:]
 indexes = dp.detect_peaks(spectro)
 Shiba=vv[indexes]
@@ -202,7 +207,7 @@ Vpeak_FM2_minus[0]= Shiba_minus[-1]
 
 for n_i in range(1,len(N)):
     
-    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, borde, ancho, spin1, spin2, alpha)
+    (vv, spectro) = sc.Shiba_Chain2(N[n_i], 2, N_omega, spin1, spin2, alpha, borde, ancho, k_f, U, j, DOS, s, delta)
     spectro = spectro[1,row,:]
     indexes = dp.detect_peaks(spectro)
     Shiba=vv[indexes]
@@ -234,15 +239,15 @@ for n_i in range(1,len(N)):
     idxminus = np.argmin(dif)
     Vpeak_FM2_minus[n_i] = Shiba_minus[idxminus]
     
-#    if Vpeak_FM2_minus[n_i] == Vpeak_FM_minus[n_i] and len(Shiba_minus)==2:
-#        Vpeak_FM2_minus[n_i] = Shiba_minus[idxminus-1]
+    if Vpeak_FM2_minus[n_i] == Vpeak_FM_minus[n_i] and len(Shiba_minus)==2:
+        Vpeak_FM2_minus[n_i] = Shiba_minus[idxminus-1]
     
     
     
     
-plt.figure(2)
+plt.figure(1)
 plt.style.use('seaborn-pastel')
-plt.plot(N,Vpeak_AF_plus,'b',N,Vpeak_AF_minus,'b',label = 'AF', linewidth=0.8)
+plt.plot(N,Vpeak_AF_plus,'b',N,Vpeak_AF_minus,'b',label = 'AF', linewidth=1.0)
 plt.plot(N,Vpeak_FM_plus,'ro',N,Vpeak_FM_minus,'ro', label = 'FM', linewidth=0.8)
 plt.plot(N,Vpeak_FM2_plus,'ro',N,Vpeak_FM2_minus,'ro', linewidth=0.8)
 plt.show()
@@ -251,26 +256,6 @@ plt.legend()
 plt.xlabel('distance (a)')
 plt.ylabel('Shiba peak (meV)')
 plt.title('U = 0 2D matrix')
-plt.savefig('AF_FMoscillations.pdf')
+plt.savefig('results/AF_FMoscillations.pdf')
 
   
-#(G,goo,Go,spectro,vv,Self)=sc.Shiba_Chain(d,spin1,spin2)
-#plt.plot(vv, spectro, label='FM')
-#indexes = dp.detect_peaks(spectro)
-#plt.plot(vv[indexes],spectro[indexes], '*')
-#
-#
-#"Anti-ferromagnetic spin1 = pi spin2 = pi"
-#
-#spin1=pi
-#spin2=pi
-#
-##(G,goo,Go,spectro,vv,Self)=sc.Shiba_Chain(d,spin1,spin2)
-##plt.plot(vv, spectro, label='FM2')
-#
-#
-#plt.legend()
-#plt.xlabel('mV')
-#plt.ylabel('PDOS')
-#
-#plt.show()

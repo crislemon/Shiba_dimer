@@ -38,9 +38,8 @@ def Shiba_Chain2(nstep, N_atoms, N_omega, spin1, spin2, alpha, borde, ancho, k_F
     
 
     "spin-orbit coupling"
-    #alpha=5
-    lamda = (alpha/3.36)/27.2116
-    #lamda = (alpha)/27.2116
+    lamda = (alpha/(2 * 3.36))/27.2116
+    
 
     "we define the omega vector"
     N_delta = 3
@@ -55,11 +54,8 @@ def Shiba_Chain2(nstep, N_atoms, N_omega, spin1, spin2, alpha, borde, ancho, k_F
     vv=Romega*27211.6
 
     "Kondo hamiltonian"
-    J=1800./27211.6
-    #U=5500./27211.6 #potential scattering
+    J = j
     
-
-
     "We calculate the Green's functions and solve Dyson eq"
     
     #impurity Hamiltonian
