@@ -36,6 +36,7 @@ def Self_Energy(J, S, thetaS, phi, U, N_atoms, N_x, N_y, borde, lamda):
     Self [t_i * 4 + 1, t_i * 4 + 1]= - J*S*cos(theta_i)-U
     Self [t_i * 4 + 2, t_i * 4 + 2]= - J*S*cos(theta_i)+U
     Self [t_i * 4 + 3, t_i * 4 + 3]= J*S*cos(theta_i)+U
+    
     Self [t_i * 4 + 0, t_i * 4 + 1]= J*S*sin(theta_i)*exp(-ui*phi_i)
     Self [t_i * 4 + 1, t_i * 4 + 0]= J*S*sin(theta_i)*exp(ui*phi_i)
     Self [t_i * 4 + 2, t_i * 4 + 3]= - J*S*sin(theta_i)*exp(ui*phi_i)

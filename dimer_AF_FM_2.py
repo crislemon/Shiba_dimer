@@ -9,24 +9,26 @@ Created on Mon Dec  3 16:23:26 2018
 import numpy as np
 import matplotlib.pyplot as plt
 import Shiba_Chain2 as sc
+plt.rcParams.update({'font.size': 13})
 #import detect_peaks as dp
 
 #distance vector
-d_ini = 0.4
+d_ini = 0.2
 d_final = 2.5
-N = np.linspace(d_final, d_ini, 31)
+N = np.linspace(d_final, d_ini, 81)
 pi=np.pi
 borde = 1
 ancho = 3
-alpha = 3.5
+alpha = 0.0
 N_omega = 2001
-U = 5500./27211.6
-#U = 0
-k_f = 0.5
+U = - 5500./27211.6
+U = 0
+k_f = 1.0
 DOS = 1.0
 s = 5.0/2.0 #spin
 delta = 0.75/27211.6 #SC gap
-j = 1800./27211.6 #coupling
+j = - 1800./27211.6 #coupling
+
 
 row = int(ancho/2)
 
@@ -91,7 +93,7 @@ plt.yticks(ticks2, ticklabels2)
 
 plt.xlabel('Energy (meV)')
 plt.ylabel('d (a)')
-plt.title('AF dimer SOC 2.5 eV')
+#plt.title('AF dimer U = 5.5 eV')
 plt.colorbar()
 plt.savefig('results/AF_dimer.pdf')
 
@@ -111,7 +113,7 @@ plt.yticks(ticks2, ticklabels2)
 
 plt.xlabel('Energy (meV)')
 plt.ylabel('d (a)')
-plt.title('FM up dimer SOC 2.5 eV')
+#plt.title('FM up dimer U = 5.5 eV')
 plt.colorbar()
 plt.savefig('results/FM_dimer.pdf')
 
@@ -131,14 +133,14 @@ plt.yticks(ticks2, ticklabels2)
 
 plt.xlabel('Energy (meV)')
 plt.ylabel('d (a)')
-plt.title('FM down dimer SOC 2.5 eV')
+#plt.title('FM down dimer U = 5.5 eV')
 plt.colorbar()
 plt.savefig('results/FM2_dimer.pdf')
 
 #save data
 np.savetxt('results/spectro_AF.txt', spectro_AF)
 np.savetxt('results/spectro_FM.txt', spectro_FM)
-np.savetxt('resuts/spectro_FM2.txt', spectro_FM2)
+np.savetxt('results/spectro_FM2.txt', spectro_FM2)
 
 
   
