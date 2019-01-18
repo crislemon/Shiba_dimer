@@ -15,14 +15,14 @@ plt.rcParams.update({'font.size': 13})
 #distance vector
 d_ini = 0.2
 d_final = 2.5
-N = np.linspace(d_final, d_ini, 81)
+N = np.linspace(d_final, d_ini, 101)
 pi=np.pi
 borde = 1
 ancho = 3
-alpha = 0.0
+alpha = 4.5
 N_omega = 2001
 U = - 5500./27211.6
-U = 0
+#U = 0
 k_f = 1.0
 DOS = 1.0
 s = 5.0/2.0 #spin
@@ -141,6 +141,7 @@ plt.savefig('results/FM2_dimer.pdf')
 np.savetxt('results/spectro_AF.txt', spectro_AF)
 np.savetxt('results/spectro_FM.txt', spectro_FM)
 np.savetxt('results/spectro_FM2.txt', spectro_FM2)
+np.savetxt('v.txt', vv)
 
 
   

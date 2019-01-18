@@ -30,7 +30,6 @@ def Shiba_Chain2(nstep, N_atoms, N_omega, spin1, spin2, alpha, borde, ancho, k_F
     Damping=0.02/27211.6 #Dynes damping
     Delta=0.75/27211.6 #SC gap
     DOS_o=1 #Normal phase DOS
-    Fermi_k= 0.4
     Fermi_k= k_F
     mass_eff=1 #SC Band effective mass
 
@@ -95,6 +94,7 @@ def Shiba_Chain2(nstep, N_atoms, N_omega, spin1, spin2, alpha, borde, ancho, k_F
             for i_omega in range(N_omega):
              
                 tr = GG[I*4 + 0, I*4 + 0, i_omega] + GG[I*4 + 1, I*4 + 1, i_omega]
+                #tr = GG[I*4 + 0, I*4 + 0, i_omega] + GG[I*4 + 3, I*4 + 3, N_omega - (i_omega+1)]
                 spectro[i_atom , j_atom, i_omega]= - (tr.imag)/(2*pi)
              
 

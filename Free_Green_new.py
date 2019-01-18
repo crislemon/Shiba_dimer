@@ -46,10 +46,10 @@ def Free_Green(N_x, N_y, lomega, Damping, Fermi_k, mass_eff, DOS_o, Delta, a_int
     xi = Fermi_k / (mass_eff * SS)
     factor = - pi * DOS_o * exp(-rr/ xi) / (SS * Fermi_k * rr)
     
-
+    #cambia signos de 22 y 33
     G[t_j * 4 + 0, t_i * 4 + 0] = ( omega * sin(Fermi_k * rr[t_j,t_i]) + SS * cos(Fermi_k * rr[t_j,t_i]) )* factor[t_j,t_i]
-    G[t_j * 4 + 1, t_i * 4 + 1] = ( omega * sin(Fermi_k * rr[t_j,t_i]) - SS * cos(Fermi_k * rr[t_j,t_i]) )* factor[t_j,t_i]
-    G[t_j * 4 + 2, t_i * 4 + 2] = ( omega * sin(Fermi_k * rr[t_j,t_i]) + SS * cos(Fermi_k * rr[t_j,t_i]) )* factor[t_j,t_i]
+    G[t_j * 4 + 1, t_i * 4 + 1] = ( omega * sin(Fermi_k * rr[t_j,t_i]) + SS * cos(Fermi_k * rr[t_j,t_i]) )* factor[t_j,t_i]
+    G[t_j * 4 + 2, t_i * 4 + 2] = ( omega * sin(Fermi_k * rr[t_j,t_i]) - SS * cos(Fermi_k * rr[t_j,t_i]) )* factor[t_j,t_i]
     G[t_j * 4 + 3, t_i * 4 + 3] = ( omega * sin(Fermi_k * rr[t_j,t_i]) - SS * cos(Fermi_k * rr[t_j,t_i]) )* factor[t_j,t_i]
 
     G[t_j * 4 + 0, t_i * 4 + 3] = - Delta * sin(Fermi_k * rr[t_j,t_i]) * factor[t_j,t_i]
